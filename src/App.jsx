@@ -7,6 +7,7 @@ import Homepage from './components/Homepage'
 import AboutUs from './components/AboutUs'
 import ContagePage from './components/ContagePage'
 import Portfolio from './components/Portfolio'
+import ServicesPage from './components/ServicesPage'
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/contact" element={<ContagePage />} />
           <Route path="/book" element={<ContagePage />} /> 
-          {/* you can create a BookPage later */}
+          <Route path="/services" element={<ServicesPage />} /> 
         </Routes>
       </div>
     </>

@@ -62,6 +62,7 @@ useEffect(() => {
     ctx.clearRect(0, 0, w, h);
 
     // glow effect
+    
     ctx.shadowBlur = 18;
     ctx.shadowColor = "rgba(232,176,4,0.7)";
 
