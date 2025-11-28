@@ -18,6 +18,9 @@ function ContagePage() {
   });
 
   const [errors, setErrors] = useState({});
+  const [popup, setPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -39,13 +42,47 @@ function ContagePage() {
     return Object.keys(newErr).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    console.log("Form submitted:", form);
-    alert("Message sent! (Hook this to your API)");
+    setLoading(true);
+
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const username = import.meta.env.VITE_API_USERNAME;
+      const password = import.meta.env.VITE_API_PASSWORD;
+
+      const authHeader = "Basic " + btoa(`${username}:${password}`);
+
+      const res = await fetch(`${baseUrl}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authHeader,
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setLoading(false);
+      setPopup(true);
+
+      // Reset form after success
+      setForm({
+        name: "",
+        phone: "",
+        email: "",
+        message: "",
+      });
+
+    } catch (err) {
+      console.error("Error submitting contact:", err);
+      setLoading(false);
+      setPopup(true);
+    }
   };
 
   // -----------------------------
@@ -237,6 +274,55 @@ function ContagePage() {
           </button>
         </motion.form>
       </div>
+
+      {loading && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center"
+          >
+            <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+
+            <p className="text-yellow-400 mt-4 text-lg tracking-wide animate-pulse">
+              Sending...
+            </p>
+          </motion.div>
+        </div>
+      )}
+
+
+      {popup && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            className="bg-[#1c1c1c] border border-white/10 p-8 rounded-2xl text-center max-w-sm"
+          >
+            <h2 className="text-2xl font-bold text-yellow-400 mb-4">
+              Thank You!
+            </h2>
+
+            <p className="text-gray-300 mb-4">
+              Your message has been successfully sent.
+            </p>
+
+            <p className="text-gray-400 mb-6">
+              We will contact you soon.
+            </p>
+
+            <button
+              onClick={() => setPopup(false)}
+              className="px-6 py-2 bg-yellow-500 text-black rounded-lg font-semibold hover:bg-yellow-400"
+            >
+              Close
+            </button>
+          </motion.div>
+        </div>
+      )}
+
+
     </div>
   );
 }

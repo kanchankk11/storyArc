@@ -30,6 +30,7 @@ export default function BookNow() {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   // ---------------------------
   // PARTICLES BACKGROUND
@@ -134,6 +135,8 @@ export default function BookNow() {
       preferredTime: formatPreferredTime(form.preferredTime)
     };
 
+    setLoading(true);
+
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
       const username = import.meta.env.VITE_API_USERNAME;
@@ -151,10 +154,12 @@ export default function BookNow() {
       });
 
       const data = await res.json();
+      setLoading(false);
       setPopup(data.orderId || "ORD-NA");
 
     } catch (err) {
       console.error("Error:", err);
+      setLoading(false);
       setPopup("ORD-XXXX");
     }
   };
@@ -268,6 +273,22 @@ export default function BookNow() {
           </motion.button>
         </motion.div>
       </div>
+
+      {loading && (
+              <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex flex-col items-center"
+                >
+                  <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+      
+                  <p className="text-yellow-400 mt-4 text-lg tracking-wide animate-pulse">
+                    Sending...
+                  </p>
+                </motion.div>
+              </div>
+            )}
 
       {/* POPUP */}
       <AnimatePresence>
