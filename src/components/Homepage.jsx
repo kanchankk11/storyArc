@@ -1,4 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+const homeBack = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356634/homeBack_sbcxym.jpg'
+const featured1 = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356633/featured1_adrast.jpg'
 
 function Homepage() {
     return (
@@ -8,7 +12,7 @@ function Homepage() {
             {/* Hero Section */}
             <section className="h-screen flex items-center justify-center relative overflow-hidden">
                 <img
-                    src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f"
+                    src={homeBack}
                     className="absolute inset-0 w-full h-full object-cover opacity-70"
                 />
                 <div className="absolute inset-0 bg-black/40"></div>
@@ -23,14 +27,23 @@ function Homepage() {
                     </p>
 
 
-                    <div className="space-x-4">
-                        <button className="px-8 py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition">
+                    <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+                        <Link
+                            to="/portfolio"
+                            className="px-8 py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition"
+                        >
                             View Portfolio
-                        </button>
-                        <button className="px-8 py-3 bg-black/60 border border-white text-white font-semibold rounded-xl hover:bg-black/80 transition">
+                        </Link>
+
+                        <Link
+                            to="/book"
+                            className="px-8 py-3 bg-black/60 border border-white text-white font-semibold rounded-xl hover:bg-black/80 transition"
+                        >
                             Book a Shoot
-                        </button>
+                        </Link>
                     </div>
+
+
                 </div>
             </section>
 
@@ -40,7 +53,7 @@ function Homepage() {
                 <h2 className="text-4xl font-bold mb-6">Featured Work</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[
-                        "https://images.unsplash.com/photo-1526171118858-7f6a5aa8f6b0",
+                        featured1,
                         "https://images.unsplash.com/photo-1519681393784-d120267933ba",
                         "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
                     ].map((img, i) => (
@@ -58,7 +71,7 @@ function Homepage() {
                     <h2 className="text-4xl font-bold mb-10">Our Services</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         {[
-                            { title: "Weddings", desc: "Cinematic films, candid photos, pre-weddings & full-event coverage." },
+                            { title: "Influencer Shoots", desc: "Cinematic reels, curated lifestyle visuals, aesthetic portraits & complete content creation for your social pages." },
                             { title: "Commercials", desc: "Brand videos, product shoots, promos & corporate films." },
                             { title: "Events", desc: "Birthdays, launches, cultural events & special occasions." }
                         ].map((svc, i) => (
@@ -76,10 +89,11 @@ function Homepage() {
             <section id="contact" className="py-20 text-center">
                 <h2 className="text-4xl font-bold mb-6">Let’s Capture Your Story</h2>
                 <p className="text-gray-600 text-lg mb-10">Reach out and we’ll bring your vision to life.</p>
-                <button className="px-10 py-4 bg-black text-white rounded-xl text-lg hover:bg-gray-800 transition">
+                <Link to="/contact" className="px-10 py-4 bg-black text-white rounded-xl text-lg hover:bg-gray-800 transition">
                     Contact Us
-                </button>
+                </Link>
             </section>
+
 
 
             {/* Footer */}

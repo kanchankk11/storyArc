@@ -1,11 +1,56 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import bgVideo from '../assets/videos/background2.mp4'
+import { Mail, Phone, Instagram, Send } from "lucide-react";
+
+const bgVideo = "https://res.cloudinary.com/dsgeppk9h/video/upload/v1764356367/background2_hxf6lr.mp4";
 
 function ContagePage() {
-   const canvasRef = useRef(null);
+  const canvasRef = useRef(null);
 
+  // -----------------------------
+  // FORM STATE + VALIDATION STATE
+  // -----------------------------
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+    // Remove error message live as user types
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
+
+  const validate = () => {
+    let newErr = {};
+
+    if (!form.name.trim()) newErr.name = "Full name is required";
+    if (!form.phone.trim()) newErr.phone = "Phone number is required";
+    if (!form.email.trim()) newErr.email = "Email address is required";
+    if (!form.message.trim()) newErr.message = "Message cannot be empty";
+
+    setErrors(newErr);
+
+    return Object.keys(newErr).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validate()) return;
+
+    console.log("Form submitted:", form);
+    alert("Message sent! (Hook this to your API)");
+  };
+
+  // -----------------------------
+  // PARTICLES
+  // -----------------------------
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -16,7 +61,7 @@ function ContagePage() {
     let particles = Array.from({ length: 60 }).map(() => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      s: Math.random() * 4 +4,
+      s: Math.random() * 4 + 4,
       vx: (Math.random() - 0.5) * 0.2,
       vy: (Math.random() - 0.5) * 0.2,
     }));
@@ -55,22 +100,13 @@ function ContagePage() {
   return (
     <div className="min-h-screen w-full relative overflow-hidden flex items-center justify-center px-6 md:px-16 py-32">
 
-      {/* VIDEO BACKGROUND */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-      >
+      {/* BACKGROUND VIDEO */}
+      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
         <source src={bgVideo} type="video/mp4" />
       </video>
 
-      {/* PARTICLE EFFECT CANVAS */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none "
-      ></canvas>
+      {/* PARTICLE CANVAS */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none"></canvas>
 
       {/* DARK OVERLAY */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
@@ -78,7 +114,7 @@ function ContagePage() {
       {/* MAIN CONTENT */}
       <div className="relative w-full max-w-7xl grid lg:grid-cols-2 gap-12 text-white">
 
-        {/* LEFT SECTION */}
+        {/* LEFT SIDE */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -94,78 +130,103 @@ function ContagePage() {
             we’d love to collaborate and bring your vision to life.
           </p>
 
-          {/* CONTACT INFO CARDS */}
+          {/* CONTACT BOXES */}
           <div className="space-y-6">
 
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4 hover:bg-white/20 transition">
               <Mail className="text-yellow-300 w-10 h-10" />
               <div>
                 <h3 className="text-xl font-semibold">Email Us</h3>
-                <p className="text-gray-200">contact@storyarc.com</p>
+                <p className="text-gray-200">business.storyarc.creative@gmail.com</p>
               </div>
             </div>
 
             <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4 hover:bg-white/20 transition">
               <Phone className="text-green-300 w-10 h-10" />
               <div>
-                <h3 className="text-xl font-semibold">Call Us</h3>
-                <p className="text-gray-200">+91 9876543210</p>
+                <h3 className="text-xl font-semibold">Whatsapp</h3>
+                <p className="text-gray-200">+91 8016820137</p>
               </div>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4 hover:bg-white/20 transition">
-              <MapPin className="text-red-300 w-10 h-10" />
-              <div>
-                <h3 className="text-xl font-semibold">Visit Us</h3>
-                <p className="text-gray-200">Kolkata, West Bengal, India</p>
+            <a
+              href="https://www.instagram.com/storyarc.creative"
+              target="_blank"
+              className="block"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl flex items-center gap-4 hover:bg-white/20 transition cursor-pointer">
+                <Instagram className="text-red-400 w-10 h-10" />
+                <div>
+                  <h3 className="text-xl font-semibold">DM Us</h3>
+                  <p className="text-gray-200">@storyarc.creative</p>
+                </div>
               </div>
-            </div>
+            </a>
 
           </div>
         </motion.div>
 
-        {/* RIGHT — FORM */}
+        {/* RIGHT SIDE — FORM */}
         <motion.form
+          onSubmit={handleSubmit}
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
           className="bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl shadow-2xl space-y-6"
         >
+
+          {/* NAME */}
           <div>
             <label className="block text-gray-200 font-medium mb-1">Full Name</label>
             <input
-              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
               className="w-full p-3 rounded-xl bg-black/30 border border-white/20 text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               placeholder="Enter your name"
             />
+            {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
           </div>
 
-          {/* PHONE FIELD ADDED */}
+          {/* PHONE */}
           <div>
             <label className="block text-gray-200 font-medium mb-1">Phone Number</label>
             <input
-              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
               className="w-full p-3 rounded-xl bg-black/30 border border-white/20 text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               placeholder="Enter your phone number"
             />
+            {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
           </div>
 
+          {/* EMAIL */}
           <div>
             <label className="block text-gray-200 font-medium mb-1">Email Address</label>
             <input
-              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
               className="w-full p-3 rounded-xl bg-black/30 border border-white/20 text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               placeholder="Enter your email"
             />
+            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
           </div>
 
+          {/* MESSAGE */}
           <div>
             <label className="block text-gray-200 font-medium mb-1">Message</label>
             <textarea
+              name="message"
               rows="5"
+              value={form.message}
+              onChange={handleChange}
               className="w-full p-3 rounded-xl bg-black/30 border border-white/20 text-white focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               placeholder="Write your message..."
             ></textarea>
+            {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
           </div>
 
           <button
@@ -180,4 +241,4 @@ function ContagePage() {
   );
 }
 
-export default ContagePage
+export default ContagePage;

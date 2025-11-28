@@ -184,6 +184,17 @@ export default function ServicesPage() {
         />
 
         <ServiceCard
+          title="Starter Spotlight"
+          price="₹7,999"
+          oldPrice="₹8,499"
+          list={[
+            "3 Edited Reels",
+            "4 hours of professional coverage",
+            "High-quality raw files included",
+          ]}
+        />
+
+        <ServiceCard
           title="Creator's Edge"
           price="₹9,999"
           oldPrice="₹11,499"
@@ -194,17 +205,6 @@ export default function ServicesPage() {
             "Cinematic lighting & framing",
             "Professional grade color correction & audio sync",
             "High-quality raw files included.*"
-          ]}
-        />
-
-        <ServiceCard
-          title="Starter Spotlight"
-          price="₹7,999"
-          oldPrice="₹8,499"
-          list={[
-            "3 Edited Reels",
-            "4 hours of professional coverage",
-            "High-quality raw files included",
           ]}
         />
 

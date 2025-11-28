@@ -1,9 +1,12 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import dp from '../assets/man.jpg'
-import backVideo from '../assets/videos/background.mp4'
-import wave from '../assets/illustrations/wave1.svg'
-import Wave from './Wave';
+import { desc } from 'framer-motion/client';
+
+const backVideo = 'https://res.cloudinary.com/dsgeppk9h/video/upload/v1764356369/background_acefvu.mp4'
+const wave = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356469/wave1_fcjguy.svg'
+const dummyDP = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764355981/dummyDP_kvs0is.png'
+const sagnickDP = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764355971/sagnickDP_kpukkc.jpg'
+const  kanchanDP =  'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764355977/kanchanDP_laammz.jpg'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -16,9 +19,9 @@ const stagger = {
 
 function AboutUs () {
   const team = [
-    { name: "Arjun Sen", role: "Creative Director", img: "/team/arjun.jpg" },
-    { name: "Riya Mehta", role: "Lead Photographer", img: "/team/riya.jpg" },
-    { name: "Soham Das", role: "Cinematographer", img: "/team/soham.jpg" },
+    { name: "Kanchan Nag", role: "Co-owner", desc: "Dummy Desc", img: sagnickDP },
+    { name: "Sagnick Ghosh", role: "Co-owner", desc: "Dummy Desc", img: kanchanDP},
+    { name: "Your Name", role: "StoryArc’s Next Big Talent", desc: "DM us to Join Our Creative Journey",  img: dummyDP }
   ];
 
   return (
@@ -190,11 +193,12 @@ function AboutUs () {
             className="text-center"
           >
             <img
-              src={dp}
+              src={m.img}
               className="w-40 h-40 mx-auto object-cover rounded-full shadow-xl border-4 border-[#E8B004]"
             />
             <h3 className="mt-4 text-xl font-semibold">{m.name}</h3>
             <p className="text-gray-600 font-raleway">{m.role}</p>
+            <p className="text-gray-500 font-raleway">{m.desc}</p>
           </motion.div>
         ))}
       </div>

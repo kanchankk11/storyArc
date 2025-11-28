@@ -21,3 +21,7 @@
 .animate-shine {
   animation: shine 2.5s infinite linear;
 }
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(79%) sepia(56%) saturate(3000%) hue-rotate(2deg) brightness(105%) contrast(90%);
+}

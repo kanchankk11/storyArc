@@ -8,6 +8,7 @@ import AboutUs from './components/AboutUs'
 import ContagePage from './components/ContagePage'
 import Portfolio from './components/Portfolio'
 import ServicesPage from './components/ServicesPage'
+import BookNow from './components/BookNow'
 
 function App() {
   return (
@@ -16,10 +17,10 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/about" element={<AboutUs />} />
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/contact" element={<ContagePage />} />
-          <Route path="/book" element={<ContagePage />} /> 
+          <Route path="/book" element={<BookNow />} /> 
           <Route path="/services" element={<ServicesPage />} /> 
         </Routes>
       </div>
