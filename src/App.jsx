@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { createBrowserRouter, Route } from 'react-router-dom'
+import { Analytics } from '@vercel/analytics/react'
 import { Routes } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
@@ -24,6 +25,8 @@ function App() {
           <Route path="/services" element={<ServicesPage />} /> 
         </Routes>
       </div>
+
+      <Analytics />
     </>
       
   )
