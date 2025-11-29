@@ -284,7 +284,7 @@ export default function BookNow() {
                   <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
       
                   <p className="text-yellow-400 mt-4 text-lg tracking-wide animate-pulse">
-                    Sending...
+                    Framing Your Story...
                   </p>
                 </motion.div>
               </div>

@@ -6,3 +6,17 @@
 .animate-shine {
   animation: shine 2.5s infinite linear;
 }
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.touch-pan-x {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}

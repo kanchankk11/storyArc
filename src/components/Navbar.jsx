@@ -79,6 +79,7 @@ function Navbar() {
             <Link
               key={idx}
               to={item === "Home" ? "" : `${item.toLowerCase().replace(/\s+/g, "-")}`}
+              onClick={() => setOpen(false)}
               className="block relative group"
             >
               {item}
@@ -96,6 +97,7 @@ function Navbar() {
             className="relative ml-4 px-5 py-2 rounded-full font-semibold text-black shadow 
              overflow-hidden group transition-all duration-300"
             style={{ backgroundColor: "#E8B004" }}
+            onClick={() => setOpen(false)}
           >
             Book Now
 
