@@ -7,7 +7,7 @@ import { portfolioItems } from "./utils/portfolioItems.js";
 
 const items = portfolioItems;
 
-const categories = ["All", "Event", "Influencer", "Cafe", "PreWedding", "Product", "FnB"];
+const categories = ["All", "Cafe", "Fashion", "PreWedding", "Event", "Influencer", "Product", "FnB"];
 
 
 

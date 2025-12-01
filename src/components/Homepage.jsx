@@ -1,8 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from "framer-motion";
 
 const homeBack = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356634/homeBack_sbcxym.jpg'
 const featured1 = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356633/featured1_adrast.jpg'
+const featured2 = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764613222/5465_4_x1qhis.jpg'
+const featured3 = 'https://res.cloudinary.com/dsgeppk9h/image/upload/v1764613222/6546_2_utnlj6.jpg'
+
+
+ const services = [
+    {
+      title: "Influencer Shoots",
+      desc: "Cinematic reels, curated lifestyle visuals, aesthetic portraits & complete content creation for your social pages.",
+      icon: "🎥",
+    },
+    {
+      title: "Commercials",
+      desc: "Brand videos, product shoots, promos & corporate films.",
+      icon: "🏷️",
+    },
+    {
+      title: "Events",
+      desc: "Birthdays, launches, cultural events & special occasions.",
+      icon: "✨",
+    },
+  ];
 
 function Homepage() {
     return (
@@ -53,9 +75,9 @@ function Homepage() {
                 <h2 className="text-4xl font-bold mb-6">Featured Work</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {[
+                        featured2,
                         featured1,
-                        "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-                        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+                        featured3
                     ].map((img, i) => (
                         <div key={i} className="rounded-2xl overflow-hidden shadow-lg group">
                             <img src={img} className="w-full h-64 object-cover group-hover:scale-105 transition" />
@@ -66,24 +88,54 @@ function Homepage() {
 
 
             {/* Services */}
-            <section id="services" className="py-20 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h2 className="text-4xl font-bold mb-10">Our Services</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                        {[
-                            { title: "Influencer Shoots", desc: "Cinematic reels, curated lifestyle visuals, aesthetic portraits & complete content creation for your social pages." },
-                            { title: "Commercials", desc: "Brand videos, product shoots, promos & corporate films." },
-                            { title: "Events", desc: "Birthdays, launches, cultural events & special occasions." }
-                        ].map((svc, i) => (
-                            <div key={i} className="p-8 bg-white rounded-2xl shadow-md hover:shadow-xl transition">
-                                <h3 className="text-2xl font-bold mb-3">{svc.title}</h3>
-                                <p className="text-gray-600">{svc.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <section id="services" className="py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-6">
 
+        {/* Section Heading */}
+        <motion.h2
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-4xl md:text-5xl font-bold mb-14 text-center"
+        >
+          Our <span className="text-yellow-500">Services</span>
+        </motion.h2>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {services.map((svc, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeOut",
+                delay: i * 0.15, // stagger animation
+              }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="
+                p-10 bg-white rounded-2xl shadow-sm 
+                hover:shadow-lg transition-all duration-300 border border-gray-200
+              "
+            >
+              {/* Icon */}
+              <div className="text-4xl mb-4">{svc.icon}</div>
+
+              <h3 className="text-2xl font-semibold mb-3 text-gray-800">
+                {svc.title}
+              </h3>
+
+              <p className="text-gray-600 leading-relaxed text-lg">
+                {svc.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
 
             {/* Contact CTA */}
             <section id="contact" className="py-20 text-center">
