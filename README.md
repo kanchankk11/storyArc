@@ -1,5 +1,5 @@
 
-![Logo](https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356562/logo_r4gw7s.png)
+![Logo](https://res.cloudinary.com/dsgeppk9h/image/upload/v1764356561/logo_tc6fqt.jpg)
 
 
 # StoryArc - Frontend
