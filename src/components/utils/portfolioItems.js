@@ -28,6 +28,6 @@ export const portfolioItems = [
   { id: 5, title: "Lehenga Reel", category: "Fashion", type: "video", thumb: thumbFashion, src: fashionVid },
   { id: 6, title: "Pico Cafe", category: "Cafe", type: "video", thumb: thumbPico, src: picoVid },
   { id: 7, title: "Family Function", category: "Event", type: "video", thumb: thumbEvent, src: eventVid },
-  { id: 8, title: "PowPow Cafe", category: "Cafe", type: "video", thumb: thumbPowpow, src: powpowVid },
+  { id: 8, title: "Pow-ow Cafe", category: "Cafe", type: "video", thumb: thumbPowpow, src: powpowVid },
   { id: 9, title: "Arsalaan Drinks", category: "FnB", type: "video", thumb: thumbArsalan, src: arsalanVid },
   { id: 10, title: "Influencer Reel", category: "Influencer", type: "video", thumb: thumbInfluencer, src: influencerVid }];

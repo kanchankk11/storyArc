@@ -320,20 +320,25 @@ function Portfolio() {
       <AnimatePresence>
         {selected && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6 overflow-y-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setSelected(null)}   // click outside closes
           >
             <motion.div
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
               className="max-w-[420px] w-full"
-              onClick={() => setSelected(null)}
+              onClick={(e) => e.stopPropagation()}  // click inside video = no close
             >
               {selected.type === "image" ? (
-                <img src={selected.src} alt={selected.title} className="w-full rounded-xl" />
+                <img
+                  src={selected.src}
+                  alt={selected.title}
+                  className="w-full rounded-xl"
+                />
               ) : (
                 <video
                   src={selected.src}
@@ -342,13 +347,20 @@ function Portfolio() {
                   className="w-full rounded-xl aspect-[9/16] object-cover"
                 />
               )}
+
               <div className="mt-4 flex justify-center">
-                <button className="px-4 py-2 rounded-full bg-white/90">Close</button>
+                <button
+                  className="px-4 py-2 rounded-full bg-white/90"
+                  onClick={() => setSelected(null)}
+                >
+                  Close
+                </button>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
 
       {/* ripple animation */}
       <style>{`

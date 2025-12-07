@@ -31,6 +31,7 @@ export default function BookNow() {
 
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(1);
 
   // ---------------------------
   // PARTICLES BACKGROUND
@@ -136,6 +137,10 @@ export default function BookNow() {
     };
 
     setLoading(true);
+    setLoadingStep(1);
+    setTimeout(() => {
+      setLoadingStep(2);
+    }, 1000);
 
     try {
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -275,20 +280,22 @@ export default function BookNow() {
       </div>
 
       {loading && (
-              <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex flex-col items-center"
-                >
-                  <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
-      
-                  <p className="text-yellow-400 mt-4 text-lg tracking-wide animate-pulse">
-                    Framing Your Story...
-                  </p>
-                </motion.div>
-              </div>
-            )}
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex flex-col items-center"
+          >
+            <div className="w-16 h-16 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin"></div>
+
+            <p className="text-yellow-400 mt-4 text-lg tracking-wide animate-pulse">
+              {
+                loadingStep === 1 ? " Framing Your Story..." : "Checking availability..."
+              }
+            </p>
+          </motion.div>
+        </div>
+      )}
 
       {/* POPUP */}
       <AnimatePresence>
