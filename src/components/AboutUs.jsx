@@ -21,8 +21,8 @@ function AboutUs() {
 
   const team = [
 
-    { name: "Sagnick Ghosh", role: "Co-owner", desc: "A seasoned videographer-photographer with 6+ years of experience, turning everyday moments into cinematic stories crafted with emotion and precision.", img: sagnickDP },
-    { name: "Kanchan Nag", role: "Co-owner", desc: "A software engineer with a creative pulse. Bridging raw code and cinematic art, ensuring the technology is as powerful as the image.", img: kanchanDP },
+    { name: "Sagnick Ghosh", role: "Creative Head", desc: "A seasoned videographer-photographer with 6+ years of experience, turning everyday moments into cinematic stories crafted with emotion and precision.", img: sagnickDP },
+    { name: "Kanchan Nag", role: "Operations Head", desc: "A software engineer with a creative pulse. Bridging raw code and cinematic art, ensuring the technology is as powerful as the image.", img: kanchanDP },
     { name: "You?", role: "StoryArc’s Next Big Talent", desc: "Join the creative journey. Always looking for visionary editors and videographers to help expand the StoryArc narrative.", img: dummyDP }
   ];
 
@@ -31,36 +31,36 @@ function AboutUs() {
 
       {/* Floating gold particles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-  {Array.from({ length: 100 }).map((_, i) => {
-    // Generate random size between 2px and 7px
-    const size = Math.random() * 5 + 2 + "px";
-    
-    return (
-      <motion.span
-        key={i}
-        initial={{ opacity: 0 }}
-        animate={{
-          opacity: [0.1, 0.4, 0.1], // Gentle pulsing opacity
-          y: [0, Math.random() * 100 - 50, 0], // Move up or down randomly
-          x: [0, Math.random() * 100 - 50, 0], // Move left or right randomly
-          scale: [1, Math.random() * 0.5 + 1, 1], // Subtle breathing scale
-        }}
-        transition={{
-          duration: Math.random() * 10 + 10, // Slower duration (10s-20s) for "cinematic" feel
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bg-[#E8B004] rounded-full"
-        style={{
-          width: size,
-          height: size,
-          top: Math.random() * 100 + "%",
-          left: Math.random() * 100 + "%",
-        }}
-      />
-    );
-  })}
-</div>
+        {Array.from({ length: 100 }).map((_, i) => {
+          // Generate random size between 2px and 7px
+          const size = Math.random() * 5 + 2 + "px";
+
+          return (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0.1, 0.4, 0.1], // Gentle pulsing opacity
+                y: [0, Math.random() * 100 - 50, 0], // Move up or down randomly
+                x: [0, Math.random() * 100 - 50, 0], // Move left or right randomly
+                scale: [1, Math.random() * 0.5 + 1, 1], // Subtle breathing scale
+              }}
+              transition={{
+                duration: Math.random() * 10 + 10, // Slower duration (10s-20s) for "cinematic" feel
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute bg-[#E8B004] rounded-full"
+              style={{
+                width: size,
+                height: size,
+                top: Math.random() * 100 + "%",
+                left: Math.random() * 100 + "%",
+              }}
+            />
+          );
+        })}
+      </div>
 
 
       <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
