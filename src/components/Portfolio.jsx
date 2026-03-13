@@ -3,18 +3,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
 import { portfolioItems } from "./utils/portfolioItems.js";
 
-// YOUR ASSET IMPORTS (from your message)
 
 const items = portfolioItems;
 
-const categories = ["All", "Cafe", "Fashion", "PreWedding", "Event", "Influencer", "Product", "FnB"];
+const categories = ["All", "F&B", "Fashion", "Influencer", "Product"];
 
 
 
 function Portfolio() {
   const [active, setActive] = useState("All");
   const [selected, setSelected] = useState(null); // item
+  const [isMobile, setIsMobile] = useState(false);
+  const [itemsToShow, setItemsToShow] = useState(10);
   const particleRef = useRef(null);
+  const loadMoreRef = useRef(null);
   const videoRefs = useRef(new Map()); // id => video element
   const cardRefs = useRef(new Map()); // id => card element
 
@@ -84,6 +86,34 @@ function Portfolio() {
   }, []);
 
 
+  // responsive initial counts
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      const initial = mobile ? 4 : 10;
+      setItemsToShow((prev) => {
+        // when switching breakpoint, don't hide already loaded items if user has scrolled
+        return Math.max(prev, initial);
+      });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const filtered = active === "All" ? items : items.filter((it) => it.category === active);
+  const batchSize = isMobile ? 4 : 10;
+  const limitedItems = filtered.slice(0, itemsToShow);
+  const hasMore = limitedItems.length < filtered.length;
+
+  // reset count on filter change
+  useEffect(() => {
+    const initial = isMobile ? 4 : 10;
+    setItemsToShow(initial);
+  }, [active]);
+
   // IntersectionObserver to keep videos paused when not visible
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -106,9 +136,35 @@ function Portfolio() {
     );
     cardRefs.current.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [limitedItems.length]);
 
-  const filtered = active === "All" ? items : items.filter((it) => it.category === active);
+  // Infinite scroll: load more when sentinel is visible
+  useEffect(() => {
+    if (!loadMoreRef.current || !hasMore) return;
+
+    const sentinel = loadMoreRef.current;
+    let ticking = false;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting || ticking) return;
+        ticking = true;
+        setItemsToShow((prev) => prev + batchSize);
+        setTimeout(() => {
+          ticking = false;
+        }, 200);
+      },
+      {
+        root: null,
+        rootMargin: "0px 0px 200px 0px",
+        threshold: 0.1,
+      }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [batchSize, hasMore]);
 
   // helper to set refs
   const setVideoRef = (id, node) => {
@@ -236,7 +292,7 @@ function Portfolio() {
 
         {/* grid (4-5 per row depending width) */}
         <div className="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {filtered.map((it) => (
+          {limitedItems.map((it) => (
             <motion.div
               key={it.id}
               data-id={it.id}
@@ -292,6 +348,11 @@ function Portfolio() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* infinite scroll sentinel / status */}
+        <div ref={loadMoreRef} className="mt-6 flex justify-center items-center text-xs text-gray-400 min-h-[32px]">
+          {hasMore ? "Scroll to load more" : filtered.length === 0 ? "No items found" : "You’ve reached the end"}
         </div>
       </div>
 
